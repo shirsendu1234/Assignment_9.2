@@ -1,0 +1,31 @@
+5. Problem Statement
+1. Use the below given data set
+DataSet
+2. Perform the below given activities:
+a. Create classification model using different decision trees.
+b. Verify model goodness of fit.
+c. Apply all the model validation techniques.
+d. Make conclusions
+====================================
+
+Example_WearableComputing_weight_lifting_exercises_biceps_curl_variations <- read.csv2("C:/Users/IBM_ADMIN/Downloads/Example_WearableComputing_weight_lifting_exercises_biceps_curl_variations.csv", sep="", comment.char="#")
+library(rpart)
+fit <- rpart(EXAMPLE ~ DATA.,
+             method="class", data=Example_WearableComputing_weight_lifting_exercises_biceps_curl_variations)
+printcp(fit) # display the results
+plotcp(fit) # visualize cross-validation results
+summary(fit) # detailed summary of splits
+
+# plot tree
+plot(fit, uniform=TRUE,
+     main="Classification Tree for Example_WearableComputing_weight_lifting_exercises_biceps_curl_variations ")
+text(fit, use.n=TRUE, all=TRUE, cex=.8)
+
+pfit<- prune(fit, cp=   fit$cptable[which.min(fit$cptable[,"xerror"]),"CP"])
+
+# plot the pruned tree
+plot(pfit, uniform=TRUE,
+     main="Pruned Classification Tree for Example_WearableComputing_weight_lifting_exercises_biceps_curl_variations")
+text(pfit, use.n=TRUE, all=TRUE, cex=.8)
+post(pfit, file = "c:/ptree.ps",
+     title = "Pruned Classification Tree for Example_WearableComputing_weight_lifting_exercises_biceps_curl_variations")
